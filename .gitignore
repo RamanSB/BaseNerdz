@@ -44,6 +44,9 @@ frontend/next-env.d.ts
 /smart-contracts/cache/
 /smart-contracts/out/
 
+# Dependencies
+/smart-contracts/lib/
+
 # Ignores development broadcast logs
 /smart-contracts!/broadcast
 /smart-contracts/broadcast/*/31337/
