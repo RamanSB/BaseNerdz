@@ -24,6 +24,7 @@ def generate_image(prompt, token_id):
     )
     
     image_url = response.data[0].url
+    print(response.data[0])
     # Save the image or perform further processing
     return image_url
 
@@ -47,6 +48,7 @@ def main():
     # Load the NFT data
     with open("../base_nerdz_nfts_v5.json", 'r') as file:
         data = json.load(file)
+    
     
     # Dictionary to store the generated image URLs
     image_urls = {} # (k=tokenId, v=imageUrl)
