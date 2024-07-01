@@ -24,7 +24,6 @@ def generate_image(prompt, token_id):
     )
     
     image_url = response.data[0].url
-    print(response.data[0])
     # Save the image or perform further processing
     return image_url
 
@@ -49,10 +48,8 @@ def main():
     with open("../base_nerdz_nfts_v5.json", 'r') as file:
         data = json.load(file)
     
-    
     # Dictionary to store the generated image URLs
     image_urls = {} # (k=tokenId, v=imageUrl)
-    print(len(data))
     # Generate images and gather the results
     for nft in data:
         token_id = nft['tokenId']
@@ -66,5 +63,29 @@ def main():
     with open("generated_image_urls.json", 'w') as outfile:
         json.dump(image_urls, outfile, indent=4)
 
+def retry(indexes: list[int]):
+    # Load the NFT data
+    with open("../base_nerdz_nfts_v5.json", 'r') as file:
+        data = json.load(file)
+    
+    # Dictionary to store the generated image URLs
+    image_urls = {}  # (k=tokenId, v=imageUrl)
+    
+    # Generate images and gather the results for the specified indices
+    for index in indexes:
+        if index < len(data):
+            nft = data[index]
+            token_id = nft['tokenId']
+            prompt = generate_prompt(nft)
+            image_url = generate_image(prompt, token_id)
+            image_urls[token_id] = image_url
+            print(f"{token_id}: {image_url}")
+        else:
+            print(f"Index {index} is out of range for the data array.")
+    
+    # Save the image URLs to a JSON file
+    with open("generated_image_urls.json", 'w') as outfile:
+        json.dump(image_urls, outfile, indent=4)
+
 if __name__ == "__main__":
-    main()
+    retry([4, 8, 84, 92])

@@ -6,8 +6,8 @@ downloads_dir = os.path.expanduser('~/Downloads/BaseNerdz')
 
 os.makedirs(downloads_dir, exist_ok=True)
 
-counter = 0
-def download_file(url: str, save_path: str, counter: int):
+counter = 724
+def download_file(url: str, save_path: str, counter: int): 
     try: 
         response = requests.get(url, stream=True)
         response.raise_for_status()
@@ -26,8 +26,11 @@ def download_file(url: str, save_path: str, counter: int):
 
 with open(urls_file, 'r') as file:
     urls = file.readlines()
-    for url in urls:
-        url = url.strip()
+    retry_indexes = [4, 8, 84, 92]
+    if (len(retry_indexes) != len(urls)):
+        raise f"Retry Indices must be the same length as URLs: {len(retry_indexes)} != {len(urls)}"
+    for i in range(len(urls)):
+        url = urls[i].strip()
         if url:
-            download_file(url, downloads_dir, counter)
+            download_file(url, downloads_dir, retry_indexes[i])
             counter+=1
