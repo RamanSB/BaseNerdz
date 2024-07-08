@@ -9,10 +9,10 @@ import fs from "fs";
 
 const file = fs.readFileSync("../base_nerdz_nfts_v5.json");
 const tokenUriNoImage: any/* { [key: string]: any }  */ = JSON.parse(file.toString());
-const BASE_PATH = "https://ipfs.io/ipfs/QmTBsejzdt6qmvzRbBRNjyxhodqqpSqKqqKg1zQi9TyYbf/";
+const BASE_PATH = "https://ipfs.io/ipfs/QmZD2nh9f7mRrihdefwGGmBY7sFdWQ1vynuaY2AULaQXt4/";
 for (let tokenUri of tokenUriNoImage) {
     const tokenIdx = tokenUri['name'].replace("BaseNerdz-", "");
-    tokenUri['imageUrl'] = BASE_PATH + "token-" + tokenIdx + ".png";
+    tokenUri['imageUrl'] = BASE_PATH + tokenIdx + ".png";
     fs.writeFileSync(`../base-nerdz/token-uris/${tokenIdx}`, JSON.stringify(tokenUri));
     "".replace
 }
