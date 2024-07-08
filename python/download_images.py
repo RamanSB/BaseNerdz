@@ -26,7 +26,7 @@ def download_file(url: str, save_path: str, counter: int):
 
 with open(urls_file, 'r') as file:
     urls = file.readlines()
-    retry_indexes = [4, 8, 84, 92]
+    retry_indexes = [328]
     if (len(retry_indexes) != len(urls)):
         raise f"Retry Indices must be the same length as URLs: {len(retry_indexes)} != {len(urls)}"
     for i in range(len(urls)):

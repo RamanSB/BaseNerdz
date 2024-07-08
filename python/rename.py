@@ -12,13 +12,15 @@ os.chdir(base_nerdz_dir)
 files = os.listdir(os.getcwd())
 files.sort(key=extract_number)
 print(f"There are {len(files)} files of which index 0 is '.DS_Store'")
-print(files[0:5])
+counter = 0
 
 for index, filename in enumerate(files):
-    new_name = f"token-{index}.png"
+    new_name = f"{index}.png"
     os.rename(filename, new_name)
     print(f"Renaming {filename} to {new_name}")
+    counter+=1
+
     
 
-print("Files have been renamed successfully.")
+print(f"{counter} Files have been renamed successfully.")
 

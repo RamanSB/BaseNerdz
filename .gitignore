@@ -57,3 +57,7 @@ frontend/next-env.d.ts
 
 # Dotenv file
 .env
+
+
+
+node_modules/

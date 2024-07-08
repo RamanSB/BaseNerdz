@@ -11,7 +11,7 @@ def generate_prompt(nft):
     accessories = ", ".join([f"{acc['value']} {acc['type']}" for acc in nft['attributes']['accessories']])
     outfit = nft['attributes']['outfit']
 
-    prompt = f"Create a 3D voxel art, with each element composed of small, cube-like pixels: A blue character with a {facial_expression} expression, wearing {accessories}, dressed in a {outfit}, with a {bg_color} background."
+    prompt = f"Create a 3D voxel art, with each element composed of small, cube-like pixels: A cute blue character with a {facial_expression} expression, wearing {accessories}, dressed in a {outfit}, with a {bg_color} background."
     return prompt
 
 def generate_image(prompt, token_id):
@@ -88,4 +88,4 @@ def retry(indexes: list[int]):
         json.dump(image_urls, outfile, indent=4)
 
 if __name__ == "__main__":
-    retry([4, 8, 84, 92])
+    retry([328])
