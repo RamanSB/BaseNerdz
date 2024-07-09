@@ -32,8 +32,9 @@ pragma solidity ^0.8.26;
  */
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
-contract BaseNerdz is ERC721 {
+contract BaseNerdz is ERC721, Ownable, ReentrancyGuard {
     uint16 constant MAX_SUPPLY = 777;
     uint256 constant MINT_FEE = 0.0025 ether;
     string constant NAME = "BaseNerdz";
@@ -50,10 +51,16 @@ contract BaseNerdz is ERC721 {
     error BaseNerdz__InsufficientMintAmount(uint256 amount);
     error BaseNerdz__OnlyAllowedOneMint(address minter);
     error BaseNerdz__SaleIsNotActive();
+    error BaseNerdz__WithdrawlFailed();
+    error BaseNerdz__TotalSupplyMinted();
 
     constructor() ERC721(NAME, SYMBOL) Ownable(msg.sender) {
         s_tokenId = 0;
     }
+
+    receive() external payable {}
+
+    fallback() external payable {}
 
     /**
      * @dev mint() follows CEI.
@@ -65,14 +72,17 @@ contract BaseNerdz is ERC721 {
      *
      *  Sale must be active. Users can only mint 1 BaseNerd per wallet.
      */
-    function mint() external payable {
+    function mint() external payable nonReentrant {
         if (!s_isSaleActive) {
             revert BaseNerdz__SaleIsNotActive();
         }
         if (super.balanceOf(msg.sender) > 0) {
             revert BaseNerdz__OnlyAllowedOneMint(msg.sender);
         }
-        uint256 mintPrice = MINT_FEE * getMultiplier();
+        if (s_tokenId >= MAX_SUPPLY) {
+            revert BaseNerdz__TotalSupplyMinted();
+        }
+        uint256 mintPrice = getPrice();
         if (msg.value < mintPrice) {
             revert BaseNerdz__InsufficientMintAmount(msg.value);
         }
@@ -80,11 +90,46 @@ contract BaseNerdz is ERC721 {
         emit BaseNerdz__MintedNFT(msg.sender, s_tokenId, msg.value);
         s_tokenId++;
         if (s_tokenId == MAX_SUPPLY) {
-            setIsSaleActive(false);
+            closeSale();
         }
     }
 
-    function getMultiplier() internal returns (uint8) {
+    function withdraw() external nonReentrant onlyOwner {
+        uint256 contractBalance = address(this).balance;
+        require(contractBalance > 0, "No funds to withdraw");
+
+        (bool success,) = payable(msg.sender).call{value: address(this).balance}("");
+        if (!success) {
+            revert BaseNerdz__WithdrawlFailed();
+        }
+    }
+
+    function setIsSaleActive(bool saleState) public onlyOwner {
+        s_isSaleActive = saleState;
+    }
+
+    function getTokenId() public view returns (uint256) {
+        return s_tokenId;
+    }
+
+    function getPrice() public view returns (uint256) {
+        return getMultiplier() * MINT_FEE;
+    }
+
+    function getActiveSale() public view returns (bool) {
+        return s_isSaleActive;
+    }
+
+    function getBaseURI() public view returns (string memory) {
+        return BASE_URI;
+    }
+
+    // Testing purposes
+    function setTokenId(uint256 tokenId) public onlyOwner {
+        s_tokenId = tokenId;
+    }
+
+    function getMultiplier() internal view returns (uint8) {
         if (s_tokenId < 100) {
             return 1;
         } else if (s_tokenId >= 100 && s_tokenId < 300) {
@@ -100,7 +145,7 @@ contract BaseNerdz is ERC721 {
         return BASE_URI;
     }
 
-    function setIsSaleActive(bool saleState) public {
-        s_isSaleActive = saleState;
+    function closeSale() internal {
+        s_isSaleActive = false;
     }
 }
