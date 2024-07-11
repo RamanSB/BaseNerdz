@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Pacifico } from "next/font/google";
+
 import "./globals.css";
+import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] });
+const pacifico = Pacifico({
+  subsets: ["latin"],
+  weight: "400"
+})
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +22,34 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+
+      <body className={inter.className}>
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
+}
+
+7
+const Navbar = () => {
+  return (<div className="navbar bg-base-100 sticky top-0 z-50 ">
+    <div className="navbar-start" >
+      <Image className="mx-1" src={"base-logo-in-blue.svg"} alt="" width={36} height={36} />
+    </div>
+    <div className="navbar-center">
+      <a className="btn btn-ghost text-3xl lg:text-4xl" style={pacifico.style}>BaseNerdz</a>
+    </div>
+    <div className="navbar-end">
+      <MintStats />
+    </div>
+  </div>)
+}
+
+const MintStats = () => {
+  return <div className="stats shadow ">
+    <div className="stat">
+      <div className="stat-title">0/777</div>
+    </div>
+  </div>
 }

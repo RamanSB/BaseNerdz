@@ -1,42 +1,57 @@
+"use client";
 import { Pacifico } from "next/font/google";
+import Image from "next/image";
+import { useRouter } from "next/router";
 
 const pacifico = Pacifico({ weight: "400", subsets: ["latin"] })
 
+/**
+ * Write logic to connect to wallet on Anvil. 
+ * Display UI to show if wallet is connected. (Add base logo In Footer.)
+ * Add state keep track of connected display certain data based on whether connected.
+ * Read from blockchain 
+ */
+
 function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center p-4">
-      <div className="hero mt-6 ">
-        <div className="hero-content text-center">
-          <div className="max-w-md">
-            <h1 className="text-5xl font-bold" style={pacifico.style}>Base Nerdz</h1>
+    <div className="flex justify-center">
+      <main className="flex flex-col min-h-screen  items-center p-4 max-w-5xl">
+        <div className="hero">
+          <div className="hero-content text-center">
+            <div className="max-w-2xl">
+              <p className=" text-base md:text-lg lg:text-xl lg:mt-4">
 
-            <p className="py-6">
-              In the vast expanse of the digital frontier, the <i><b style={{ color: "blue" }}>Base Nerdz</b></i> stand as beacons of innovation and resilience.
-              <br />
-              <br />
-              Each of the 777 unique NFTs symbolizes the relentless pursuit of knowledge, the courage to explore the unknown, and the unity of visionary minds. <br />
-            </p>
+                In the vast expanse of the digital frontier, the <i><b style={{ color: "blue" }} className={pacifico.className}>Base Nerdz</b></i> stand as beacons of innovation and resilience.
+
+
+                <br />
+                <br />
+                Each of the 777 unique NFTs symbolizes the relentless pursuit of knowledge, the courage to explore the unknown, and the unity of visionary minds. <br />
+
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-      <ConnectButton />
-      <BaseNerdzGrid />
-      <FAQ />
-    </main>
+        <ConnectButton />
+        <BaseNerdzGrid />
+        <FAQ />
+        <Footer />
+      </main>
+    </div>
   );
 }
 
 
 const ConnectButton = () => {
-  return <button className="btn btn-primary mb-8">Connect Wallet</button>
+  return <button className="btn btn-primary my-4">Connect Wallet</button>
 }
 
 const BaseNerdzGrid = () => {
   const BASE_PATH = "https://ipfs.io/ipfs/QmZD2nh9f7mRrihdefwGGmBY7sFdWQ1vynuaY2AULaQXt4/<X>.png";
   const images: string[] = [BASE_PATH.replace("<X>", "94"), BASE_PATH.replace("<X>", "2"), BASE_PATH.replace("<X>", "8"), BASE_PATH.replace("<X>", "353"), BASE_PATH.replace("<X>", "643"), BASE_PATH.replace("<X>", "299"), BASE_PATH.replace("<X>", "555"), BASE_PATH.replace("<X>", "432")];
-  return <div className="carousel carousel-center rounded-box">
+  return <div className="carousel carousel-center rounded-box my-4 ">
     {images.map((url, idx) => {
-      return (<div className="carousel-item w-1/3">
+      return (<div key={idx} className="carousel-item w-1/3 lg:w-1/5">
         <img src={url} />
       </div>)
     })}
@@ -45,8 +60,8 @@ const BaseNerdzGrid = () => {
 
 const FAQ = () => {
   return (
-    <div className="my-8">
-      <div className="collapse collapse-plus bg-base-200">
+    <div className="my-8 ">
+      <div className="collapse collapse-plus bg-base-300">
         <input type="checkbox" />
         <div className="collapse-title text-xl font-medium">How to mint a BaseNerd?</div>
         <div className="collapse-content">
@@ -58,7 +73,7 @@ const FAQ = () => {
         </div>
       </div>
 
-      <div className="collapse collapse-plus bg-base-200 my-2">
+      <div className="collapse collapse-plus bg-base-300 my-2">
         <input type="checkbox" />
         <div className="collapse-title text-xl font-medium">Benefits of a BaseNerd?</div>
         <div className="collapse-content">
@@ -69,6 +84,37 @@ const FAQ = () => {
       </div>
     </div>
   )
+}
+
+const Footer = () => {
+
+  const navigateTo = (url: string) => {
+
+  }
+
+  const BASE_PATH = "https://ipfs.io/ipfs/QmZD2nh9f7mRrihdefwGGmBY7sFdWQ1vynuaY2AULaQXt4/<X>.png";
+  return <footer className="footer bg-neutral text-neutral-content p-10">
+    <aside>
+      <img src={BASE_PATH.replace("<X>", "666")} width={96} height={96} className="rounded-lg" />
+      <p>
+        BaseNerdz, Inc.
+        <br />
+        Created by 0xNascosta
+      </p>
+    </aside>
+    <nav>
+      <h6 className="footer-title">Social</h6>
+      <div className="grid grid-flow-col gap-4">
+        <div>
+
+          <Image src="/twitter.png" alt="Twitter" height={48} width={48} onClick={() => navigateTo("wwww.x.com/0xNascosta")} />
+        </div>
+        <Image src="/github.png" alt="Github" height={48} width={48} onClick={() => navigateTo("wwww.github.com/RamanSB/BaseNerdz")} />
+        <Image src="/discord.png" alt="Discord" height={48} width={48} onClick={() => navigateTo("wwww.x.com/0xNascosta")} />
+
+      </div>
+    </nav>
+  </footer>
 }
 
 export default Home;
