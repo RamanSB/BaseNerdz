@@ -3,6 +3,7 @@ import { Inter, Pacifico } from "next/font/google";
 
 import "./globals.css";
 import Image from "next/image";
+import Providers from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
 const pacifico = Pacifico({
@@ -24,8 +25,10 @@ export default function RootLayout({
     <html lang="en">
 
       <body className={inter.className}>
-        <Navbar />
-        {children}
+        <Providers>
+          <Navbar />
+          {children}
+        </Providers>
       </body>
     </html>
   );
