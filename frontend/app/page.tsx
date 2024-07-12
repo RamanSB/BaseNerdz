@@ -5,8 +5,8 @@ import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
 import { formatEther } from "ethers";
 import { Pacifico } from "next/font/google";
-import React from "react";
-import { type BaseError, Connector, useAccount, useConnect, useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import React, { useEffect } from "react";
+import { type BaseError, Connector, useAccount, useConnect, useReadContract, useWaitForTransactionReceipt, useWriteContract, useSwitchChain } from "wagmi";
 import { BASE_NERDZ_ABI, BASE_BASE_NERDZ_CONTRACT_ADDRESS } from "./utils/constants";
 import config from "../wagmi";
 
@@ -18,6 +18,12 @@ function Home() {
   const isSaleActive: boolean = getActiveSaleResponse.data as boolean;
   const { isConnected, address } = useAccount();
   console.log(`isConnected: ${isConnected}`);
+  const { chains, switchChain } = useSwitchChain();
+  useEffect(() => {
+    if (isConnected) {
+      switchChain({ chainId: 8453 })
+    }
+  }, [isConnected]);
   return (
     <div className="flex justify-center">
       <main className="flex flex-col min-h-screen  items-center p-4 max-w-5xl">
