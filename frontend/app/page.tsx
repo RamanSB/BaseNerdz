@@ -28,7 +28,7 @@ function Home() {
               <p className=" text-base md:text-lg lg:text-xl lg:mt-2">
                 In the vast expanse of the digital frontier, the <i><b style={{ color: "blue" }} className={pacifico.className}>Base Nerdz</b></i> stand as beacons of innovation and resilience.</p>
               <div className="flex flex-row justify-center my-4 lg:my-8">
-                <Countdown isSaleActive={isSaleActive} />
+                <Countdown />
               </div>
               <p className=" text-base md:text-lg lg:text-xl lg:mt-2">
                 Each of the 777 unique NFTs symbolizes the relentless pursuit of knowledge, the courage to explore the unknown, and the unity of visionary minds. <br />
