@@ -85,8 +85,9 @@ const MintButton: React.FC<{ isSaleActive: boolean }> = ({ isSaleActive }) => {
       console.log(error);
     }
     const errorMessage = (error as BaseError).message;
-    if (errorMessage.includes("InsufficientMintAmount")) {
-      return "Please provide a sufficient amount of ETH to mint."
+    console.log(errorMessage);
+    if (errorMessage.includes("insufficient")) {
+      return `${formatEther(price)} ETH required to mint.`
     }
     if (errorMessage.includes("OnlyAllowedOneMint")) {
       return "Users are only permitted to mint one BaseNerd."
