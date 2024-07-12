@@ -11,11 +11,14 @@ const Footer = () => {
     return <footer className="footer bg-neutral text-neutral-content p-10">
         <aside>
             <Image src={BASE_PATH.replace("<X>", "666")} width={96} height={96} className="rounded-lg" alt="" />
-            <p>
-                BaseNerdz, Inc.
-                <br />
-                Created by 0xNascosta
-            </p>
+            <div className="flex flex-row mt-2">
+                <Image className="mr-2" src={"base-logo-in-blue.svg"} alt="" width={36} height={36} />
+                <p>
+                    BaseNerdz, Inc.
+                    <br />
+                    Created by 0xNascosta
+                </p>
+            </div>
         </aside>
         <nav>
             <h6 className="footer-title">Social</h6>
