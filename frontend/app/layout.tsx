@@ -1,15 +1,11 @@
+import "./globals.css";
+
 import type { Metadata } from "next";
 import { Inter, Pacifico } from "next/font/google";
-
-import "./globals.css";
-import Image from "next/image";
 import Providers from "./providers";
+import Navbar from "@/components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
-const pacifico = Pacifico({
-  subsets: ["latin"],
-  weight: "400"
-})
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -34,25 +30,3 @@ export default function RootLayout({
   );
 }
 
-7
-const Navbar = () => {
-  return (<div className="navbar bg-base-100 sticky top-0 z-50 ">
-    <div className="navbar-start" >
-      <Image className="mx-1" src={"base-logo-in-blue.svg"} alt="" width={36} height={36} />
-    </div>
-    <div className="navbar-center">
-      <a className="btn btn-ghost text-3xl lg:text-4xl" style={pacifico.style}>BaseNerdz</a>
-    </div>
-    <div className="navbar-end">
-      <MintStats />
-    </div>
-  </div>)
-}
-
-const MintStats = () => {
-  return <div className="stats shadow ">
-    <div className="stat">
-      <div className="stat-title">0/777</div>
-    </div>
-  </div>
-}
