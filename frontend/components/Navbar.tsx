@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useAccount, useReadContract } from "wagmi";
 import config from "../wagmi";
 
-import { ANVIL_BASE_NERDZ_ABI, ANVIL_BASE_NERDZ_CONTRACT_ADDRESS } from "@/app/utils/constants";
+import { BASE_NERDZ_ABI, BASE_BASE_NERDZ_CONTRACT_ADDRESS } from "@/app/utils/constants";
 import { useEffect, useState } from "react";
 
 const pacifico = Pacifico({
@@ -29,7 +29,7 @@ const Navbar = () => {
 }
 
 const MintStats = () => {
-    const { data: nftsMinted } = useReadContract({ abi: ANVIL_BASE_NERDZ_ABI, address: ANVIL_BASE_NERDZ_CONTRACT_ADDRESS, functionName: "getTokenId" });
+    const { data: nftsMinted } = useReadContract({ abi: BASE_NERDZ_ABI, address: BASE_BASE_NERDZ_CONTRACT_ADDRESS, functionName: "getTokenId" });
 
     return <div className="stats shadow">
         <div className="stat">

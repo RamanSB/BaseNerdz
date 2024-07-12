@@ -1,15 +1,14 @@
-import { http, createConfig } from 'wagmi'
-import { base, localhost, anvil } from 'wagmi/chains'
+import { createConfig, http } from 'wagmi';
+import { base } from 'wagmi/chains';
 import { injected } from "wagmi/connectors";
 
 
 const config = createConfig({
-    chains: [anvil],
+    chains: [base],
     connectors: [
         injected(),
     ],
     transports: {
-        [anvil.id]: http(),
         [base.id]: http()
     },
 })

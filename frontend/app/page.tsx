@@ -7,14 +7,14 @@ import { formatEther } from "ethers";
 import { Pacifico } from "next/font/google";
 import React from "react";
 import { type BaseError, Connector, useAccount, useConnect, useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
-import { ANVIL_BASE_NERDZ_ABI, ANVIL_BASE_NERDZ_CONTRACT_ADDRESS } from "./utils/constants";
+import { BASE_NERDZ_ABI, BASE_BASE_NERDZ_CONTRACT_ADDRESS } from "./utils/constants";
 import config from "../wagmi";
 
 const pacifico = Pacifico({ weight: "400", subsets: ["latin"] })
 
 
 function Home() {
-  const getActiveSaleResponse = useReadContract({ abi: ANVIL_BASE_NERDZ_ABI, address: ANVIL_BASE_NERDZ_CONTRACT_ADDRESS, functionName: "getActiveSale" });
+  const getActiveSaleResponse = useReadContract({ abi: BASE_NERDZ_ABI, address: BASE_BASE_NERDZ_CONTRACT_ADDRESS, functionName: "getActiveSale" });
   const isSaleActive: boolean = getActiveSaleResponse.data as boolean;
   const { isConnected, address } = useAccount();
   console.log(`isConnected: ${isConnected}`);
@@ -57,7 +57,7 @@ const ConnectButton: React.FC = () => {
 
 
 const MintButton: React.FC<{ isSaleActive: boolean }> = ({ isSaleActive }) => {
-  const getPriceResponse = useReadContract({ abi: ANVIL_BASE_NERDZ_ABI, address: ANVIL_BASE_NERDZ_CONTRACT_ADDRESS, functionName: "getPrice" });
+  const getPriceResponse = useReadContract({ abi: BASE_NERDZ_ABI, address: BASE_BASE_NERDZ_CONTRACT_ADDRESS, functionName: "getPrice" });
   const price: bigint = getPriceResponse.data as bigint;
 
   const { data: hash, error, isPending, writeContract } = useWriteContract({ config });
@@ -65,8 +65,8 @@ const MintButton: React.FC<{ isSaleActive: boolean }> = ({ isSaleActive }) => {
   const mint = async () => {
     try {
       writeContract({
-        address: ANVIL_BASE_NERDZ_CONTRACT_ADDRESS,
-        abi: ANVIL_BASE_NERDZ_ABI,
+        address: BASE_BASE_NERDZ_CONTRACT_ADDRESS,
+        abi: BASE_NERDZ_ABI,
         functionName: 'mint',
         value: price,
         gas: BigInt(1000000)

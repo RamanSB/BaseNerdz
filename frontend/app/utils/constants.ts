@@ -1,5 +1,6 @@
+export const BASE_BASE_NERDZ_CONTRACT_ADDRESS = "0x2079516Dd52851d9Fc93e024c5Fbb21B2B987804";
 export const ANVIL_BASE_NERDZ_CONTRACT_ADDRESS = "0x5fbdb2315678afecb367f032d93f642f64180aa3";
-export const ANVIL_BASE_NERDZ_ABI = [
+export const BASE_NERDZ_ABI = [
     {
         "type": "constructor",
         "inputs": [],
