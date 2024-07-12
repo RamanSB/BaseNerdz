@@ -14,7 +14,6 @@ const pacifico = Pacifico({
 
 const Navbar = () => {
     const { isConnected } = useAccount({ config });
-    console.log(`isConnected [navbar]: ${isConnected}`);
     return (<div className="navbar bg-base-100 sticky top-0 z-50 ">
         <div className="navbar-start" >
             <Image className="mx-1" src={"base-logo-in-blue.svg"} alt="" width={36} height={36} />
@@ -31,6 +30,7 @@ const Navbar = () => {
 
 const MintStats = () => {
     const { data: nftsMinted } = useReadContract({ abi: ANVIL_BASE_NERDZ_ABI, address: ANVIL_BASE_NERDZ_CONTRACT_ADDRESS, functionName: "getTokenId" });
+
     return <div className="stats shadow">
         <div className="stat">
             <div className="stat-title">{(nftsMinted as bigint)?.toString()}/777</div>
