@@ -1,6 +1,5 @@
 "use client";
 import { Pacifico } from "next/font/google";
-import Image from "next/image";
 import { useAccount, useReadContract } from "wagmi";
 import config from "../wagmi";
 
